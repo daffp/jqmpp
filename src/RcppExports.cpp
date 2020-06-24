@@ -20,9 +20,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// my_dist
+Rcpp::NumericMatrix my_dist(Rcpp::NumericMatrix m1, Rcpp::NumericMatrix m2);
+RcppExport SEXP _jqmpp_my_dist(SEXP m1SEXP, SEXP m2SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type m1(m1SEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type m2(m2SEXP);
+    rcpp_result_gen = Rcpp::wrap(my_dist(m1, m2));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_jqmpp_normal_kernel_3d_indicator_vectorcpp", (DL_FUNC) &_jqmpp_normal_kernel_3d_indicator_vectorcpp, 5},
+    {"_jqmpp_my_dist", (DL_FUNC) &_jqmpp_my_dist, 2},
     {NULL, NULL, 0}
 };
 

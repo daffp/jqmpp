@@ -22,3 +22,17 @@ normal_kernel_3d_indicator_vectorcpp <- function(N, x, y, z, sd = 0.1) {
     .Call('_jqmpp_normal_kernel_3d_indicator_vectorcpp', PACKAGE = 'jqmpp', N, x, y, z, sd)
 }
 
+#' Calculates distance between two matrices with the same number of columns.
+#'
+#' @param m1,m2 Two matrices with the same number of columns.
+#' @return Returns a matrix of distances with dimension nrow(m1) by nrow(m2).
+#' @details The distance is calculated between each row of the two input matrices.
+#' @examples
+#' my_dist(diag(2), diag(1, 3, 2))
+#' @export
+#' @useDynLib jqmpp
+#' @importFrom Rcpp sourceCpp
+my_dist <- function(m1, m2) {
+    .Call('_jqmpp_my_dist', PACKAGE = 'jqmpp', m1, m2)
+}
+

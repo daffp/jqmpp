@@ -71,4 +71,29 @@ Rcpp::NumericVector normal_kernel_3d_indicator_vectorcpp(
 
 
 
+//' Calculates distance between two matrices with the same number of columns.
+//'
+//' @param m1,m2 Two matrices with the same number of columns.
+//' @return Returns a matrix of distances with dimension nrow(m1) by nrow(m2).
+//' @details The distance is calculated between each row of the two input matrices.
+//' @examples
+//' my_dist(diag(2), diag(1, 3, 2))
+//' @export
+//' @useDynLib jqmpp
+//' @importFrom Rcpp sourceCpp
+// [[Rcpp::export]]
+Rcpp::NumericMatrix my_dist(Rcpp::NumericMatrix m1,  Rcpp::NumericMatrix m2) {
+  
+  int nr = m1.nrow();
+  int nc = m2.nrow();
+  Rcpp::NumericMatrix dmat(nr, nc);
+  
+  for(int i=0; i < nr; i++){
+    for(int j=0; j < nc; j++){
+      dmat(i, j) = sqrt(sum(pow(m1.row(i) - m2.row(j), 2.0)));
+    }
+  }
+  return dmat;
+}
+
 
