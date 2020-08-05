@@ -7,6 +7,7 @@ Author: Your Name
 Maintainer: Your Name <your@email.com>
 Description: Calculate 3D intensity over a grid.
 License: GPL (>= 2)
+Depends: R (>= 3.6.0)
 Imports: Rcpp (>= 1.0.4)
 LinkingTo: Rcpp
 RoxygenNote: 7.1.0
