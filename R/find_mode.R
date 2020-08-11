@@ -32,6 +32,7 @@ find_nearest_mode = function(A, ...){
   pos = create_indices_for_subarray(dm, mouse)
   subarray = do.call(`[`, c(list(A), pos))
   max_subarray = max(subarray)   
+  new_pos = mouse # return value if already at max
   
   # REPEAT
   repeat{
