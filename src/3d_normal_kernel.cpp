@@ -3,10 +3,10 @@
 using namespace Rcpp;
 
 
-Rcpp::NumericVector john_powercpp(Rcpp::NumericVector x){
+Rcpp::NumericVector john_powercpp(Rcpp::NumericVector x, Rcpp::NumericVector y){
   Rcpp::LogicalVector between = (x != 1.0) & ( x != 0.0);
   Rcpp::NumericVector out(x.size());
-  std::transform(x.begin(), x.end(), between.begin(), out.begin(), ::pow);
+  std::transform(y.begin(), y.end(), between.begin(), out.begin(), ::pow);
   return out;
 }
 
@@ -18,14 +18,12 @@ double normal_kernel_3d_indicatorcpp(
     double mux, double muy, double muz,
     double sd ) {
   Rcpp::NumericVector temp_x, temp_y, temp_z;
-  temp_x  = john_powercpp(Rcpp::dnorm(x, mux, sd));
-  temp_y  = john_powercpp(Rcpp::dnorm(y, muy, sd));
-  temp_z  = john_powercpp(Rcpp::dnorm(z, muz, sd));
+  temp_x  = john_powercpp(x, Rcpp::dnorm(x, mux, sd));
+  temp_y  = john_powercpp(y, Rcpp::dnorm(y, muy, sd));
+  temp_z  = john_powercpp(z, Rcpp::dnorm(z, muz, sd));
   double temp = mean(temp_x* temp_y* temp_z);
   return temp;
 }
-
-
 
 // function to loop through vector for `x` and `mu` in dnorm
 // i.e. calculate normal_kernel_3d_indicatorcpp in a grid
