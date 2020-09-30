@@ -32,10 +32,26 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// normal_kernel_3d_indicator_vectorcpp_old
+Rcpp::NumericVector normal_kernel_3d_indicator_vectorcpp_old(int N, Rcpp::NumericVector x, Rcpp::NumericVector y, Rcpp::NumericVector z, double sd);
+RcppExport SEXP _jqmpp_normal_kernel_3d_indicator_vectorcpp_old(SEXP NSEXP, SEXP xSEXP, SEXP ySEXP, SEXP zSEXP, SEXP sdSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type z(zSEXP);
+    Rcpp::traits::input_parameter< double >::type sd(sdSEXP);
+    rcpp_result_gen = Rcpp::wrap(normal_kernel_3d_indicator_vectorcpp_old(N, x, y, z, sd));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_jqmpp_normal_kernel_3d_indicator_vectorcpp", (DL_FUNC) &_jqmpp_normal_kernel_3d_indicator_vectorcpp, 5},
     {"_jqmpp_my_dist", (DL_FUNC) &_jqmpp_my_dist, 2},
+    {"_jqmpp_normal_kernel_3d_indicator_vectorcpp_old", (DL_FUNC) &_jqmpp_normal_kernel_3d_indicator_vectorcpp_old, 5},
     {NULL, NULL, 0}
 };
 

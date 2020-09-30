@@ -10,9 +10,9 @@
 #' @examples
 #' set.seed(1)
 #' N = 2
-#' x = rnorm(5); mux=1
-#' y = rnorm(5); muy=1
-#' z = rnorm(5); muz=1
+#' x = rnorm(5)
+#' y = rnorm(5)
+#' z = rnorm(5)
 #' sd=1
 #' normal_kernel_3d_indicator_vectorcpp(N, x, y, z, sd)
 #' @export
@@ -34,5 +34,26 @@ normal_kernel_3d_indicator_vectorcpp <- function(N, x, y, z, sd = 0.1) {
 #' @importFrom Rcpp sourceCpp
 my_dist <- function(m1, m2) {
     .Call('_jqmpp_my_dist', PACKAGE = 'jqmpp', m1, m2)
+}
+
+#' Calculates 3D Gaussian intensity over a grid -- OLD FUNCTION
+#'
+#' @param N An integer that defines where the intensity will be calculated in the unit cube into. If N=10 then 10^3 cubes are formed.
+#' @param x,y,z A vector of positions on one dimension to calculate the kernel on.
+#' @param sd The standard deviation which is assumed to be the same for each dimension.
+#' @return Returns a vector giving the intensity at each grid point.
+#' @examples
+#' set.seed(1)
+#' N = 2
+#' x = rnorm(5)
+#' y = rnorm(5)
+#' z = rnorm(5)
+#' sd=1
+#' normal_kernel_3d_indicator_vectorcpp(N, x, y, z, sd)
+#' @export
+#' @useDynLib jqmpp
+#' @importFrom Rcpp sourceCpp
+normal_kernel_3d_indicator_vectorcpp_old <- function(N, x, y, z, sd = 0.1) {
+    .Call('_jqmpp_normal_kernel_3d_indicator_vectorcpp_old', PACKAGE = 'jqmpp', N, x, y, z, sd)
 }
 

@@ -25,6 +25,7 @@ double normal_kernel_3d_indicatorcpp(
   return temp;
 }
 
+
 // function to loop through vector for `x` and `mu` in dnorm
 // i.e. calculate normal_kernel_3d_indicatorcpp in a grid
 //' Calculates 3D Gaussian intensity over a grid.
@@ -36,9 +37,9 @@ double normal_kernel_3d_indicatorcpp(
 //' @examples
 //' set.seed(1)
 //' N = 2
-//' x = rnorm(5); mux=1
-//' y = rnorm(5); muy=1
-//' z = rnorm(5); muz=1
+//' x = rnorm(5)
+//' y = rnorm(5)
+//' z = rnorm(5)
 //' sd=1
 //' normal_kernel_3d_indicator_vectorcpp(N, x, y, z, sd)
 //' @export
@@ -66,9 +67,6 @@ Rcpp::NumericVector normal_kernel_3d_indicator_vectorcpp(
   return intensity;
 }
 
-
-
-
 //' Calculates distance between two matrices with the same number of columns.
 //'
 //' @param m1,m2 Two matrices with the same number of columns.
@@ -94,4 +92,58 @@ Rcpp::NumericMatrix my_dist(Rcpp::NumericMatrix m1,  Rcpp::NumericMatrix m2) {
   return dmat;
 }
 
+
+// removed the john_power as wasn't using it correctly on this previous code
+// added this back in to check
+double normal_kernel_3d_indicatorcpp_old(
+    Rcpp::NumericVector x, Rcpp::NumericVector y, Rcpp::NumericVector z,  
+    double mux, double muy, double muz,
+    double sd ){
+   Rcpp::NumericVector temp_x, temp_y, temp_z;
+   temp_x  = Rcpp::dnorm(x, mux, sd);
+   temp_y  = Rcpp::dnorm(y, muy, sd);
+   temp_z  = Rcpp::dnorm(z, muz, sd);
+   double temp = mean(temp_x* temp_y* temp_z);
+   return temp;
+ }
+
+
+//' Calculates 3D Gaussian intensity over a grid -- OLD FUNCTION
+//'
+//' @param N An integer that defines where the intensity will be calculated in the unit cube into. If N=10 then 10^3 cubes are formed.
+//' @param x,y,z A vector of positions on one dimension to calculate the kernel on.
+//' @param sd The standard deviation which is assumed to be the same for each dimension.
+//' @return Returns a vector giving the intensity at each grid point.
+//' @examples
+//' set.seed(1)
+//' N = 2
+//' x = rnorm(5)
+//' y = rnorm(5)
+//' z = rnorm(5)
+//' sd=1
+//' normal_kernel_3d_indicator_vectorcpp(N, x, y, z, sd)
+//' @export
+//' @useDynLib jqmpp
+//' @importFrom Rcpp sourceCpp
+// [[Rcpp::export]]
+Rcpp::NumericVector normal_kernel_3d_indicator_vectorcpp_old(
+    int N,
+    Rcpp::NumericVector x, Rcpp::NumericVector y, Rcpp::NumericVector z,  
+    double sd=0.1 ) {
+  N = N + 1;
+  double reps = pow(N, 3);
+  Rcpp::NumericVector intensity(reps);
+
+  Rcpp::IntegerVector iv = Rcpp::seq(0, N-1);
+  Rcpp::NumericVector v = as<Rcpp::NumericVector>(iv)/(N-1);
+  
+  for(int i=0; i < N; i++){
+    for(int j=0; j < N; j++){
+      for(int k=0; k < N; k++){
+        intensity[(i * N + j) * N + k] = normal_kernel_3d_indicatorcpp_old(x, y, z, v(i), v(j), v(k), sd);
+      }
+    }
+  }
+  return intensity;
+}
 
